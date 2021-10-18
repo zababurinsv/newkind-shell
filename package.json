@@ -44,5 +44,8 @@
   "bugs": {
     "url": "https://github.com/zababurinsv/newkind-shell/issues"
   },
-  "homepage": "https://github.com/zababurinsv/newkind-shell#readme"
+  "homepage": "https://github.com/zababurinsv/newkind-shell#readme",
+  "dependencies": {
+    "@newkind/universe": "^0.1.0"
+  }
 }
