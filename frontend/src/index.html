@@ -157,14 +157,18 @@
     import {IDBFS} from '@newkind/fs'
     import wasmBinary from './modules/newkind/wasmBinary.mjs'
     import Universe from "./modules/newkind/index.mjs";
-    var statusElement = document.getElementById('status');
-    var progressElement = document.getElementById('progress');
-    var spinnerElement = document.getElementById('spinner');
-    var Module = {
+    let statusElement = document.getElementById('status');
+    let progressElement = document.getElementById('progress');
+    let spinnerElement = document.getElementById('spinner');
+    let Module = {
+        wasmBinary: wasmBinary,
+        locateFile: function () {
+
+        },
         preRun: [],
         postRun: [],
         print: (function() {
-            var element = document.getElementById('output');
+            let element = document.getElementById('output');
             if (element) element.value = ''; // clear browser cache
             return function(text) {
                 if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
@@ -185,7 +189,7 @@
             console.error(text);
         },
         canvas: (function() {
-            var canvas = document.getElementById('canvas');
+            let canvas = document.getElementById('canvas');
 
             // As a default initial behavior, pop up an alert when webgl context is lost. To make your
             // application robust, you may want to override this behavior before shipping!
@@ -197,8 +201,8 @@
         setStatus: function(text) {
             if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
             if (text === Module.setStatus.last.text) return;
-            var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
-            var now = Date.now();
+            let m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+            let now = Date.now();
             if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
             Module.setStatus.last.time = now;
             Module.setStatus.last.text = text;
@@ -231,8 +235,6 @@
             if (text) Module.printErr('[post-exception status] ' + text);
         };
     };
-    Module.locateFile = function() { }
-    Module.wasmBinary = wasmBinary
     Universe(Module);
 </script>
 </body>
