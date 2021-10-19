@@ -143,17 +143,23 @@
     <progress value="0" max="100" id="progress" hidden=1></progress>
 </div>
 
-
 <div class="emscripten_border">
-    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+    <canvas
+        class="emscripten" id="canvas"
+        oncontextmenu="event.preventDefault()"
+        tabindex=-1
+    >
+    </canvas>
 </div>
 <textarea id="output" rows="8"></textarea>
-
-<script type='text/javascript'>
+<script type="module">
+    import events from "@newkind/events";
+    import {IDBFS} from '@newkind/fs'
+    import wasmBinary from './modules/newkind/wasmBinary.mjs'
+    import Universe from "./modules/newkind/index.mjs";
     var statusElement = document.getElementById('status');
     var progressElement = document.getElementById('progress');
     var spinnerElement = document.getElementById('spinner');
-
     var Module = {
         preRun: [],
         postRun: [],
@@ -225,12 +231,9 @@
             if (text) Module.printErr('[post-exception status] ' + text);
         };
     };
-</script>
-<script type="module">
-    import events from "@newkind/events";
-    import initModule from "./modules/newkind/index.mjs";
-    console.log(events, initModule)
-    // initModule(Module);
+    Module.locateFile = function() { }
+    Module.wasmBinary = wasmBinary
+    Universe(Module);
 </script>
 </body>
 </html>
