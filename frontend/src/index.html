@@ -162,9 +162,6 @@
         let universe = await loader()
         await universe.dom(window)
         universe.data.wasmBinary = wasmBinary
-        universe.data.onerror = window.onerror = () => {
-            console.log('error')
-        }
         let Module = await universe.init()
         console.log(Module)
         // let wasm = await universe.import('./modules/index.mjs')
